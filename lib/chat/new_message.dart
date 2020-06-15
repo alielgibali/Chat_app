@@ -1,0 +1,59 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class NewMessage extends StatefulWidget {
+  @override
+  _NewMessageState createState() => _NewMessageState();
+}
+
+class _NewMessageState extends State<NewMessage> {
+  final _controller = TextEditingController();
+  var _enterdMessage = '';
+  void _sendMessage() async{
+    _controller.clear();
+    FocusScope.of(context).unfocus();
+    final user = await FirebaseAuth.instance.currentUser();
+    Firestore.instance.collection('chat').add({
+      'text': _enterdMessage,
+      'createdAt': Timestamp.now(),
+      'userId': user.uid,
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(
+        top: 8.0,
+      ),
+      padding: EdgeInsets.all(
+        8.0,
+      ),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: TextField(
+              controller: _controller,
+              decoration: InputDecoration(
+                labelText: 'Send a message...',
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _enterdMessage = value;
+                });
+              },
+            ),
+          ),
+          IconButton(
+            color: Theme.of(context).primaryColor,
+            icon: Icon(
+              Icons.send,
+            ),
+            onPressed: _enterdMessage.trim().isEmpty ? null : _sendMessage,
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>327943765115-0fbqel00n9bjl4nbbutl6499rkr30o19.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.327943765115-0fbqel00n9bjl4nbbutl6499rkr30o19</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAGn5FVSx1hxU5HVLKbyAIRexHdBgs_mhg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>327943765115</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ali.chattapp</string>
+	<key>PROJECT_ID</key>
+	<string>chatting-e9151</string>
+	<key>STORAGE_BUCKET</key>
+	<string>chatting-e9151.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:327943765115:ios:d80216452d965cd48776de</string>
+	<key>DATABASE_URL</key>
+	<string>https://chatting-e9151.firebaseio.com</string>
+</dict>
+</plist>

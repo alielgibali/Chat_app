@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "327943765115",
+    "firebase_url": "https://chatting-e9151.firebaseio.com",
+    "project_id": "chatting-e9151",
+    "storage_bucket": "chatting-e9151.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327943765115:android:ed5a4864e1e3acc28776de",
+        "android_client_info": {
+          "package_name": "com.ali.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327943765115-ilh94gh0ce3ipn3o972jv2ag93u9kd6h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeEw5ExKvc3EAxQhUAUjs5Ph6f0gjy-5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "327943765115-ilh94gh0ce3ipn3o972jv2ag93u9kd6h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
