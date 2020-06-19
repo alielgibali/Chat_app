@@ -1,3 +1,4 @@
+import 'package:chating/widgets/user_imagePicker.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
@@ -7,7 +8,7 @@ class AuthForm extends StatefulWidget {
   );
   final void Function(String email, String userName, String password,
       bool isLogin, BuildContext ctx) submitFn;
- final bool isLoading;
+  final bool isLoading;
   @override
   _AuthFormState createState() => _AuthFormState();
 }
@@ -53,6 +54,7 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  if (!_isLogin) UserImagePicker(),
                   TextFormField(
                     key: ValueKey('email'),
                     validator: (value) {
