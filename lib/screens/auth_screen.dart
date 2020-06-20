@@ -1,14 +1,14 @@
+import 'dart:io';
+
 import 'package:chating/screens/chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 import '.././widgets/auth_form.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthScreen extends StatefulWidget {
-
-
   @override
   _AuthScreenState createState() => _AuthScreenState();
 }
@@ -20,8 +20,10 @@ class _AuthScreenState extends State<AuthScreen> {
     String email,
     String userName,
     String password,
+    File imageFile,
+    String imageFormat,
     bool isLogin,
-    BuildContext ctx,
+    BuildContext context,
   ) async {
     AuthResult authResult;
     try {
@@ -41,6 +43,15 @@ class _AuthScreenState extends State<AuthScreen> {
           email: email,
           password: password,
         );
+        //..
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('user_image')
+            .child(authResult.user.uid + '.' + imageFormat);
+        await ref.putFile(imageFile).onComplete;
+
+        final url = await ref.getDownloadURL();
+
         await Firestore.instance
             .collection('users')
             .document(authResult.user.uid)
@@ -48,28 +59,35 @@ class _AuthScreenState extends State<AuthScreen> {
           {
             'username': userName,
             'email': email,
+            'image_url': url,
           },
         );
       }
       Navigator.of(context).pushReplacementNamed(ChatScreen.routeName);
     } on PlatformException catch (err) {
-      setState(() {
-        _isLoading = false;
-      });
+      if (this.mounted)
+        setState(() {
+          _isLoading = false;
+        });
       var message = 'An error occured , please check your credentials';
       if (err.message != null) {
         message = err.message;
       }
-      Scaffold.of(ctx).showSnackBar(SnackBar(
+      Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(message),
         backgroundColor: Theme.of(context).errorColor,
       ));
     } catch (error) {
-      setState(() {
-        _isLoading = false;
-      });
+      if (this.mounted)
+        setState(() {
+          _isLoading = false;
+        });
       print(error);
     }
+  }
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

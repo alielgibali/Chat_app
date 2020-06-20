@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chating/widgets/user_imagePicker.dart';
 import 'package:flutter/material.dart';
 
@@ -6,8 +8,8 @@ class AuthForm extends StatefulWidget {
     this.submitFn,
     this.isLoading,
   );
-  final void Function(String email, String userName, String password,
-      bool isLogin, BuildContext ctx) submitFn;
+  final void Function(String email, String userName, String password,File userImageFile,String imageForma,
+      bool isLogin, BuildContext context) submitFn;
   final bool isLoading;
   @override
   _AuthFormState createState() => _AuthFormState();
@@ -21,6 +23,8 @@ class _AuthFormState extends State<AuthForm> {
   var _userEmail = '';
   var _userName = '';
   var _userPassword = '';
+  File _userImageFile;
+  String _userImageFormat;
   @override
   void dispose() {
     super.dispose();
@@ -28,13 +32,38 @@ class _AuthFormState extends State<AuthForm> {
     _passwordFocus.dispose();
   }
 
+  void _pickedImage(File image , String imageFormat) {
+    _userImageFile = image;
+    _userImageFormat = imageFormat;
+
+  }
+
   void _trySubmit() {
     FocusScope.of(context).unfocus();
     final isValid = _formKey.currentState.validate();
+    if (_userImageFile == null && !_isLogin) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Please Pick an Image.',
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+      return;
+    }
     if (isValid) {
       _formKey.currentState.save();
-      widget.submitFn(_userEmail.trim(), _userName.trim(), _userPassword.trim(),
-          _isLogin, context);
+      widget.submitFn(
+        _userEmail.trim(),
+        _userName.trim(),
+        _userPassword.trim(),
+        _userImageFile,
+        _userImageFormat,
+        _isLogin,
+        context,
+      );
     }
   }
 
@@ -54,7 +83,7 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  if (!_isLogin) UserImagePicker(),
+                  if (!_isLogin) UserImagePicker(_pickedImage),
                   TextFormField(
                     key: ValueKey('email'),
                     validator: (value) {
@@ -124,9 +153,10 @@ class _AuthFormState extends State<AuthForm> {
                     FlatButton(
                       textColor: Theme.of(context).primaryColor,
                       onPressed: () {
-                        setState(() {
-                          _isLogin = !_isLogin;
-                        });
+                        if (this.mounted)
+                          setState(() {
+                            _isLogin = !_isLogin;
+                          });
                       },
                       child: Text(_isLogin
                           ? 'Create a new account'
