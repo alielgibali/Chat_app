@@ -16,13 +16,16 @@ class _NewMessageState extends State<NewMessage> {
     final user = await FirebaseAuth.instance.currentUser();
     final userData =
         await Firestore.instance.collection('users').document(user.uid).get();
-  
+
     Firestore.instance.collection('chat').add({
       'text': _enterdMessage,
       'createdAt': Timestamp.now(),
       'userId': user.uid,
       'username': userData['username'],
       'userImage': userData['image_url']
+    });
+    setState(() {
+      _enterdMessage = '';
     });
   }
 
@@ -39,6 +42,9 @@ class _NewMessageState extends State<NewMessage> {
         children: <Widget>[
           Expanded(
             child: TextField(
+              textCapitalization: TextCapitalization.sentences,
+              autocorrect: true,
+              enableSuggestions: true,
               controller: _controller,
               decoration: InputDecoration(
                 labelText: 'Send a message...',

@@ -32,6 +32,7 @@ class _ChatScreenState extends State<ChatScreen> {
         return;
       }
     );
+    fbm.subscribeToTopic('chat');
   }
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: Text('Chat'),
         actions: <Widget>[
           DropdownButton(
+            underline: Container(),
             items: [
               DropdownMenuItem(
                 child: Container(
